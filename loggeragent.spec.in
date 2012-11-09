@@ -1,0 +1,38 @@
+#
+# Spec file for loggeragent
+#
+Summary: Loggerithim Metric Collection Agent
+Name: loggeragent
+Version: @PACKAGE_VERSION@
+Release: 1
+Copyright: GPL
+Group: System Environments/Daemons
+Source: http://www.loggerithim.com/pub/loggeragent/loggeragent-@PACKAGE_VERSION@.tar.gz
+URL: http://www.loggerithim.com
+Distribution: Loggerithim
+Vendor: loggerithim.org
+Packager: Cory 'G' Watson <gphat@cafes.net>
+
+%description
+loggeragent is a daemon that reports metric information to a central
+Loggerithim server.
+
+%prep
+
+%setup
+
+%build
+./configure --enable-static --enable-metrics --with-cert-directory=@CERT_DIRECTORY@
+make
+strip src/loggeragent
+strip plugins/metricops.so
+
+%install
+make install
+
+%files
+@prefix@/share/loggeragent
+@prefix@/lib/loggeragent
+%config /etc/loggeragent.xml
+/etc/init.d/loggeragent
+@prefix@/bin/loggeragent

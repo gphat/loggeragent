@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+ <listenport>4443</listenport>
+ <metricinterval>600</metricinterval>
+ <metrichost>127.0.0.1</metrichost>
+ <metricport>4442</metricport>
+ <metricsavepath>@prefix@/share/loggeragent</metricsavepath>
+</configuration>

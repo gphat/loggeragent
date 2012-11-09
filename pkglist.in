@@ -1,0 +1,16 @@
+i pkginfo=pkginfo
+d none @prefix@ ? ? ?
+d none @prefix@/bin ? ? ?
+f none @prefix@/bin/loggeragent 0755 bin bin
+d none @prefix@/lib ? ? ?
+f none @prefix@/lib/loggeragent/metricops.so 0755 bin bin
+f none @prefix@/share/loggeragent/agent.key 0700 bin bin
+f none @prefix@/share/loggeragent/agent.crt 0700 bin bin
+f none @prefix@/share/loggeragent/CA.crt 0700 bin bin
+d none /etc ? ? ?
+f none /etc/loggeragent.xml 0644 bin bin
+d none /etc/init.d ? ? ?
+f none /etc/init.d/loggeragent 0755 bin bin
+d none /etc/rc3.d ? ? ?
+s none /etc/rc3.d/S90loggeragent=/etc/init.d/loggeragent
+s none /etc/rc3.d/K10loggeragent=/etc/init.d/loggeragent

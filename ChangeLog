@@ -1,0 +1,51 @@
+Version 3.1.1
+~~~~~~~~~~~~~
+ - Save metrics in the proper place
+ - Don't skip the first non-header line of /proc/net/dev
+ - Avoid some double free()s.
+ - Add some logging.
+ - Add future code for fetching IP of interface.
+ - Fix bug resending metrics.
+ - Allow metric saving limit to be set in config file.
+ - Include the agent version number w/metrics
+
+Version 3.1.0
+~~~~~~~~~~~~~
+ - Shut down if there is no listen port and if there are no jobs.
+ - Use XPath for configuration file reading/fetching
+ - Fix bug in writing packet information to XML.
+ - Allow plugins to be selectively enabled at configure time.
+ - Get rid of 'old' directory
+ - Get rid of plugin.h 
+ - Rename s_logger_stats to s_stats
+ - Get rid of logger_stats.h for metricops.h
+ - Rename OSNAME_plugin.c to OSNAME_metric.c, since is more than one plugin
+ - metric_plugin.c was not closedir()-ing an opendir()-ed DIR if something
+   errored out during metric saving
+ - Only allow 5 saved metrics to exist before we stop saving.  This saved the
+   central LR server from being hammered when it comes back up.
+
+Version 3.0.2
+~~~~~~~~~~~~~
+ - Replace ERR_reason_string calls with ERR_error_string, since the former can return
+   NULL, which causes vsnprintf() to puke from the llog() function.
+ - lint induced cleanup
+
+Version 3.0.1
+~~~~~~~~~~~~~
+ - cleaned up strlen() uses.
+ - get filename from FQ path for ftp_putfile, so we don't try an upload to the
+   FQ path on the remote side.
+ - provide a fancy ssl_send that wraps SSL_write
+ - enable partial writes and auto-retry with SSL_write
+ - use SSL_shutdown() on socket before we close it.
+ - Check the string length in log()
+ - Have ftp_putfile() split the filename off a FQ path
+ - Cleanup
+ - Added Solaris 'qfe' support
+ - Make trim() actually work
+ - Add solaris_devices.c
+
+Version 3.0.0
+~~~~~~~~~~~~~
+ - Rewrite.

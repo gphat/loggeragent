@@ -1,0 +1,84 @@
+<!-- loggerscript.dtd -->
+ <!ELEMENT script (commands)[none]>
+ <!ELEMENT commands>
+
+ <!ELEMENT createfile	(EMPTY)>
+ <!-- How about just name? -->
+ <!ATTLIST createfile
+	filename		(CDATA)	#REQUIRED
+	mode			(CDATA)	#IMPLIED
+ >
+ 
+ <!ELEMENT removefile	(EMPTY)>
+ <!-- How about just name? -->
+ <!ATTLIST removefile
+	filename		(CDATA) #REQUIRED
+ >
+
+ <!ELEMENT move			(EMPTY)>
+ <!-- Easier names? -->
+ <!ATTLIST move
+	fromname		(CDATA) #REQUIRED
+	toname			(CDATA) #REQUIRED
+ >
+
+ <!ELEMENT removedir	(EMPTY)>
+ <!-- How about just name? -->
+ <!ATTLIST removedir
+	dirname			(CDATA) #REQUIRED
+ >
+
+ <!ELEMENT makedir		(EMPTY)>
+ <!-- How about just name? -->
+ <!ATTLIST makedir
+	dirname			(CDATA) #REQUIRED
+	mode			(CDATA) #IMPLIED
+ >
+ 
+ <!ELEMENT mksymlink	(EMPTY)>
+ <!ATTLIST mksymlink
+	oldpath			(CDATA) #REQUIRED
+	newpath			(CDATA) #REQUIRED
+ >
+
+ <!ELEMENT execute		(#PCDATA)>
+ <!ATTLIST execute
+	directory		(CDATA) #IMPLIED
+	returnoutput	(CDATA) #IMPLIED
+ >
+
+ <!ELEMENT writefile	(#PCDATA)>
+ <!ATTLIST writefile
+	filename		(CDATA) #REQUIRED
+	mode			(CDATA) #IMPLIED
+ >
+
+ <!ELEMENT statfile		(EMPTY)>
+ <!ATTLIST statfile
+	filename		(CDATA) #REQUIRED
+ >
+
+ <!ELEMENT list			(EMPTY)>
+ <!ATTLIST list
+	directory		(CDATA) #REQUIRED
+ >
+
+ <!ELEMENT ftp_putfile	(EMPTY)>
+ <!ATTLIST ftp_putfile
+	remotehost		(CDATA) #REQUIRED
+	filename		(CDATA) #REQUIRED
+	remotename		(CDATA) #IMPLIED
+	remotedir		(CDATA) #IMPLIED
+	username		(CDATA) #REQUIRED
+	password		(CDATA) #REQUIRED
+ >
+
+ <!ELEMENT ftp_getfile	(EMPTY)>
+ <!ATTLIST ftp_getfile
+	remotehost		(CDATA) #REQUIRED
+	filename		(CDATA) #REQUIRED
+	localname		(CDATA) #IMPLIED
+	remotedir		(CDATA) #IMPLIED
+	username		(CDATA) #REQUIRED
+	password		(CDATA) #REQUIRED
+ >

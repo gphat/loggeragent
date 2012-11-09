@@ -1,0 +1,48 @@
+#!/bin/sh
+#
+# loggeragent
+# description: Loggerithim monitoring/management agent
+#
+# chkconfig: 345 90 10
+# config: /etc/loggeragent.xml
+
+RETVAL=0
+
+start() {
+	echo $ECHO_N "Starting loggeragent:"
+	@prefix@/bin/loggeragent
+	echo " OK"
+}
+
+stop() {
+	echo $ECHO_N "Shutting down loggeragent:"
+	if [ -r "/var/run/loggeragent.pid" ]
+		then
+		kill `cat /var/run/loggeragent.pid`
+		echo " OK"
+	else
+		echo " no PID file."
+	fi
+}
+
+restart() {
+	stop
+	start
+}
+
+case "$1" in
+	start)
+		start
+		;;
+	stop)
+		stop
+		;;
+	restart|reload)
+		restart
+		;;
+	*)
+		echo "Usage: loggerithim {start|stop|restart|reload}"
+		exit 1
+esac
+
+exit $RETVAL

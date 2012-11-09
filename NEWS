@@ -1,0 +1,28 @@
+
+Version 3.0.0
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This file documents the changes between versions.  It is different from the
+ChangeLog, in that changes are summarized and grouped by version.
+
+Major Changes in 3.0.0:
+
+- GNU Autoconf and Automake
+
+- Switch to listening for connections, rather than initiating them.
+
+- Implement metric collection as a plugin, along with the new plugins used
+  for management.
+
+- Allow plugins to add recurring tasks as 'jobs'.
+
+- Dependency on OpenSSL, libXML2, and cURL.
+
+Minor Changes:
+
+- None worth mentioning, hence the major version change.
+
+Some comments:
+
+The loggeragent is beginning anew, and there are going to be problems.  Please
+bear with us.

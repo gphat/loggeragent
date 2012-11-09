@@ -1,0 +1,28 @@
+CFLAGS	= @CFLAGS@ -I..
+OBJS	= main.o module.o log.o util.o network.o script.o configfile.o job.o
+
+# $* = name part of target
+# $@ = full target name
+# $< = dependent name
+
+.SUFFIXES:
+.SUFFIXES: .c .o .so
+
+.c.o:
+	@CC@ $(CFLAGS) -c $<
+all: loggeragent
+
+loggeragent: $(OBJS)
+	@CC@ $(CFLAGS) @LIBS@ -o @PACKAGE_NAME@ $(OBJS) @STATICLIBS@
+
+install: all
+	@INSTALL@ @PACKAGE_NAME@ @prefix@/bin/
+
+uninstall:
+	rm -rf @prefix@/bin/@PACKAGE_NAME@
+
+clean:
+	rm -rf @PACKAGE_NAME@ core $(OBJS) linux_plugin.o *.pkg *.rpm
+
+distclean: clean
+	rm -rf Makefile

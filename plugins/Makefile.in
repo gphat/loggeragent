@@ -1,0 +1,29 @@
+CFLAGS	= @CFLAGS@ -I..
+OBJS	= @PLUGINS@
+
+.SUFFIXES:
+.SUFFIXES: .c .o .so
+
+.c.so:
+	@CC@ @SHAREFLAG@ @LDFLAGS@ -L. -L../src $(CFLAGS) -I../src @LIBS@ -o $*.so $< @STATICLIBS@
+
+metricops.so:
+	@CC@ @SHAREFLAG@ @LDFLAGS@ -L. -L../src $(CFLAGS) -I../src @LIBS@ -o metricops.so metricops.c @OSNAME@_metric.c @STATICLIBS@
+
+packageops.so:
+	@CC@ @SHAREFLAG@ @LDFLAGS@ -L. -L../src $(CFLAGS) -I../src @LIBS@ -o packageps.so packageops.c @OSNAME@_packages.c @STATICLIBS@
+
+all: $(OBJS)
+
+install:
+	@INSTALL@ -d @prefix@/lib/loggeragent/
+	@INSTALL@ -m 644 *.so @prefix@/lib/loggeragent/
+
+uninstall:
+	rm -rf @prefix@/lib/loggeragent/
+
+clean:
+	rm -rf *.so *.o
+
+distclean: clean
+	rm -rf Makefile

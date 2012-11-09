@@ -1,0 +1,7 @@
+PKG="lgragent"
+NAME="Loggerithim Agent"
+ARCH="sparc"
+VERSION="@PACKAGE_VERSION@"
+CATEGORY="system"
+DESC="loggeragent is a monitoring agent for Loggerithim"
+CLASSES="none"

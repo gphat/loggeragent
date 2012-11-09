@@ -1,0 +1,34 @@
+Executive Summary
+~~~~~~~~~~~~~~~~~
+
+loggeragent is a program intented to be used as a remote agent of the
+Loggerithim monitoring and management software.
+
+Documentation
+~~~~~~~~~~~~~
+
+Extensive documentation is included with the Loggerithim distribution, not with
+this package.
+
+Building and Installing
+~~~~~~~~~~~~~~~~~~~~~~~
+
+0. Run configure.  You must specify a directory containing certificate files
+(agent.crt, agent.key, and CA.crt).  These should be present on a machine
+where Loggerithim was installed.  It is also advised that you use
+--enable-static to build static binaries, so that your monitored machines
+do not need special libraries installed.  You probably also want to add
+--enable-metrics so that the metric plugin will be built.
+
+So your configure line should be something like:
+./configure --enable-static --enable-metrics \
+--with-cert-directory=/usr/local/loggerithim/certificates
+
+1. Run "make"
+
+2. Run "make install" or "make package".  The latter will create an RPM or
+Solaris pkg (depending on what OS you run it on) that you can install on the
+machines you will be monitoring.  "make install" is only for a local install,
+and is really only for testing.
+
+Cory Watson (gphat@cafes.net)

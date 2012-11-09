@@ -1,0 +1,75 @@
+subdirs=src plugins
+
+all:
+	@for dir in ${subdirs}; do \
+		(cd $$dir && $(MAKE) all) \
+		|| case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
+	done && test -z "$$fail"
+
+install:
+	@INSTALL@ -d @prefix@/share/loggeragent
+	@INSTALL@ -m 0600 @CERT_DIRECTORY@/agent.key @prefix@/share/loggeragent
+	@INSTALL@ -m 0600 @CERT_DIRECTORY@/agent.crt @prefix@/share/loggeragent
+	@INSTALL@ -m 0600 @CERT_DIRECTORY@/CA.crt @prefix@/share/loggeragent
+	@INSTALL@ res/loggeragent.init /etc/init.d/loggeragent
+	@INSTALL@ res/loggeragent.xml /etc/loggeragent.xml
+	@for dir in ${subdirs}; do \
+		(cd $$dir && $(MAKE) install) \
+		|| case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
+	done && test -z "$$fail"
+
+uninstall:
+	rm -rf /usr/local/share/loggeragent
+	rm -rf /etc/loggeragent.xml
+	rm -rf /etc/init.d/loggeragent
+	@for dir in ${subdirs}; do \
+		(cd $$dir && $(MAKE) uninstall) \
+		|| case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
+	done && test -z "$$fail"
+
+clean:
+	@for dir in ${subdirs}; do \
+		(cd $$dir && $(MAKE) clean) \
+		|| case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
+	done && test -z "$$fail"
+
+distclean:
+	/bin/rm -rf Makefile config.h config.status config.cache config.log loggeragent.spec pkginfo pkglist autom4te.cache *.rpm *.pkg res/loggeragent.init res/loggeragent.xml
+	@for dir in ${subdirs}; do \
+		(cd $$dir && $(MAKE) distclean) \
+		|| case "$(MFLAGS)" in *k*) fail=yes;; *) exit 1;; esac; \
+	done && test -z "$$fail"
+
+snapshot:
+	mkdir @PACKAGE_NAME@-@PACKAGE_VERSION@/
+	mkdir @PACKAGE_NAME@-@PACKAGE_VERSION@/res
+	mkdir @PACKAGE_NAME@-@PACKAGE_VERSION@/src/
+	mkdir @PACKAGE_NAME@-@PACKAGE_VERSION@/plugins/
+	cp Makefile.in @PACKAGE_NAME@-@PACKAGE_VERSION@/
+	cp pkginfo.in @PACKAGE_NAME@-@PACKAGE_VERSION@/
+	cp pkglist.in @PACKAGE_NAME@-@PACKAGE_VERSION@/
+	cp loggeragent.spec.in @PACKAGE_NAME@-@PACKAGE_VERSION@/
+	cp install-sh @PACKAGE_NAME@-@PACKAGE_VERSION@/
+	cp config* @PACKAGE_NAME@-@PACKAGE_VERSION@/
+	cp src/Makefile.in @PACKAGE_NAME@-@PACKAGE_VERSION@/src/
+	cp src/*.h @PACKAGE_NAME@-@PACKAGE_VERSION@/src/
+	cp src/*.c @PACKAGE_NAME@-@PACKAGE_VERSION@/src/
+	cp plugins/Makefile.in @PACKAGE_NAME@-@PACKAGE_VERSION@/plugins/
+	cp plugins/*.c @PACKAGE_NAME@-@PACKAGE_VERSION@/plugins/
+	cp plugins/*.h @PACKAGE_NAME@-@PACKAGE_VERSION@/plugins/
+	cp res/loggeragent.init.in @PACKAGE_NAME@-@PACKAGE_VERSION@/res/
+	cp res/loggeragent.xml.in @PACKAGE_NAME@-@PACKAGE_VERSION@/res/
+	tar czf ../@PACKAGE_NAME@-@PACKAGE_VERSION@.tar.gz @PACKAGE_NAME@-@PACKAGE_VERSION@
+	rm -rf @PACKAGE_NAME@-@PACKAGE_VERSION@
+
+package: @PLATPACK@
+
+rpm: snapshot
+	mv ../@PACKAGE_NAME@-@PACKAGE_VERSION@.tar.gz /usr/src/redhat/SOURCES/
+	rpm -bb loggeragent.spec
+	mv /usr/src/redhat/RPMS/i386/@PACKAGE_NAME@-@PACKAGE_VERSION@-1.i386.rpm ./
+
+pkg: install
+	pkgmk -f pkglist -r / -o
+	pkgtrans -s /var/spool/pkg /tmp/@PKG_NAME@-@PACKAGE_VERSION@.pkg @PKG_NAME@
+	mv /tmp/@PKG_NAME@-@PACKAGE_VERSION@.pkg ./
